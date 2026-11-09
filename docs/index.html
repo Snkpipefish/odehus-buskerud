@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ødehus i Buskerud</title>
+<meta name="description" content="Prospekter: mulige forlatte hus og småbruk i Buskerud, rangert etter sol, jord og forfall. Vurder hvert tun og eksporter svarene.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+:root{
+  --bg:#f6f4ee; --panel:#ffffff; --ink:#1f2a1f; --muted:#5d6b5d; --line:#dcd8cc;
+  --accent:#2f6b3a; --accent-ink:#ffffff; --warn:#b4541a; --bad:#8d2b2b; --good:#2f6b3a; --soft:#e9efe6;
+  --f0:#8aa58f; --f1:#c9b24a; --f2:#d9823b; --f3:#a63d3d;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#171a16; --panel:#1f241e; --ink:#e8e6dc; --muted:#a7b0a3; --line:#353b33;
+  --accent:#7fbf8a; --accent-ink:#10160f; --soft:#263026;
+}}
+:root[data-theme="dark"]{ --bg:#171a16; --panel:#1f241e; --ink:#e8e6dc; --muted:#a7b0a3; --line:#353b33; --accent:#7fbf8a; --accent-ink:#10160f; --soft:#263026; }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+header{padding:28px 16px 12px;max-width:1200px;margin:0 auto}
+h1{margin:0 0 6px;font-size:clamp(26px,4vw,38px);letter-spacing:-.01em}
+.lead{color:var(--muted);max-width:70ch;margin:0 0 10px}
+details.hjelp{max-width:70ch;margin:0 0 8px;color:var(--muted)}
+details.hjelp summary{cursor:pointer;color:var(--ink)}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
+.stat b{display:block;font-size:20px}
+main{max-width:1200px;margin:0 auto;padding:0 16px 60px}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:960px){ .layout{grid-template-columns:minmax(0,1fr) 440px} .side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto} }
+#kart{height:420px;border-radius:12px;border:1px solid var(--line);background:var(--soft)}
+@media (min-width:960px){ #kart{height:52vh} }
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.filtre{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 12px;align-items:end}
+.filtre label{font-size:13px;color:var(--muted);display:block}
+.filtre select,.filtre input[type=search],.filtre input[type=number]{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+.chk{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--ink)!important;padding-top:6px}
+.liste{display:grid;gap:12px;margin-top:12px}
+.kort{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;scroll-margin-top:12px}
+.kort.aktiv{outline:2px solid var(--accent)}
+.topp{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.topp h2{margin:0;font-size:19px}
+.rank{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.b{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--soft)}
+.b.f0{background:var(--f0);color:#fff;border-color:transparent}.b.f1{background:var(--f1);color:#231f00;border-color:transparent}
+.b.f2{background:var(--f2);color:#fff;border-color:transparent}.b.f3{background:var(--f3);color:#fff;border-color:transparent}
+.b.vis{border-style:dashed}
+.fakta{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px 12px;margin:8px 0;font-size:14px}
+.fakta div span{display:block;color:var(--muted);font-size:12px}
+.forfall{font-size:14px;color:var(--muted);margin:4px 0 8px}
+.lenker{display:flex;flex-wrap:wrap;gap:6px}
+.lenker a{font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;text-decoration:none;background:var(--bg)}
+.vurder{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);display:grid;gap:8px}
+.valg{display:flex;flex-wrap:wrap;gap:6px}
+.valg button{font:inherit;font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.valg button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.valg button.on.nei{background:var(--bad);border-color:var(--bad);color:#fff}
+.valg button.on.kanskje{background:var(--warn);border-color:var(--warn);color:#fff}
+.vurder textarea{width:100%;min-height:54px;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+.mine h3{margin:0 0 6px;font-size:16px}
+.mine .rad{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mine button,.mine label.knapp{font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.mine button.prim{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.mine input[type=text]{width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;margin-top:6px}
+.tom{color:var(--muted);padding:20px;text-align:center}
+.mer{margin:14px auto 0;display:block;font:inherit;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+footer{max-width:1200px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:13px}
+.leaflet-container{font:inherit}
+.popup b{font-size:15px}
+.marker{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.marker.f0{background:var(--f0)}.marker.f1{background:var(--f1)}.marker.f2{background:var(--f2)}.marker.f3{background:var(--f3)}.marker.fx{background:#777}
+.marker.sett{outline:3px solid var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ødehus i Buskerud</h1>
+  <p class="lead">Mulige forlatte hus, småbruk og setre i Buskerud, funnet i åpne kartdata og rangert etter sol, dyrkbar jord og tegn til forfall. Målet er et sted for blomster- og grønnsakshage, med restaurering eller nybygg.</p>
+  <details class="hjelp"><summary>Slik leser du lista</summary>
+    <p><b>Score</b> (0–1) vekter sol 35 %, innmark 25 %, forfall 30 % og himmelretning 10 %. <b>Forfall</b> 0–3: 0 = tun i bruk, 1 = delvis gjengrodd, 2 = sterkt gjengrodd eller småbygg i forfall, 3 = ingen stående bygning. Merket <i>sett</i> betyr at flyfoto er vurdert manuelt; <i>laser</i> er en automatisk gjetning fra høydedata og bommer ofte, særlig i lavlandet. Åpne <b>Flyfoto</b> og se selv før du mener noe.</p>
+    <p><b>Vurderingene dine</b> lagres i denne nettleseren. Trykk «Last ned vurderinger» eller «Kopier» nederst til høyre og send fila eller teksten tilbake.</p>
+    <p>Eierforhold slås ikke opp her. Lenken <b>Eiendom</b> går til Kartverkets seeiendom.no, der man kan se matrikkelinformasjon selv.</p>
+  </details>
+  <div class="stats" id="stats"></div>
+</header>
+<main>
+  <div class="layout">
+    <section>
+      <div id="kart" role="img" aria-label="Kart over prospektene"></div>
+      <div class="panel">
+        <div class="filtre">
+          <div><label for="fKommune">Kommune</label><select id="fKommune"><option value="">Alle</option></select></div>
+          <div><label for="fType">Type</label><select id="fType"><option value="">Alle</option></select></div>
+          <div><label for="fForfall">Forfall minst</label><select id="fForfall"><option value="">Alle</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
+          <div><label for="fVeg">Maks m til bilvei</label><input id="fVeg" type="number" min="0" step="50" placeholder="f.eks. 200"></div>
+          <div><label for="fSort">Sorter etter</label><select id="fSort"><option value="rank">Samlet score</option><option value="forfall">Forfall</option><option value="sol">Sol</option><option value="innmark">Innmark</option><option value="veg">Nærmest bilvei</option></select></div>
+          <div><label for="fSok">Søk navn eller gnr/bnr</label><input id="fSok" type="search" placeholder="f.eks. Tveten eller 196/5"></div>
+          <label class="chk"><input id="fSett" type="checkbox"> Bare manuelt sjekkede</label>
+          <label class="chk"><input id="fUvurdert" type="checkbox"> Skjul de jeg har vurdert</label>
+        </div>
+      </div>
+      <div class="liste" id="liste"></div>
+      <button class="mer" id="mer" hidden>Vis flere</button>
+    </section>
+    <aside class="side">
+      <div class="panel mine">
+        <h3>Mine vurderinger</h3>
+        <div id="mineTall" class="forfall">Ingen ennå.</div>
+        <input id="navn" type="text" placeholder="Navnet ditt (valgfritt, følger med i eksporten)">
+        <div class="rad">
+          <button class="prim" id="lastNed">Last ned vurderinger</button>
+          <button id="kopier">Kopier som tekst</button>
+          <label class="knapp" for="importer">Importer fil</label><input id="importer" type="file" accept="application/json" hidden>
+        </div>
+        <div class="rad"><button id="visMine">Vis bare mine Ja/Kanskje</button><button id="nullstill">Slett alle mine</button></div>
+        <div id="mineListe" class="forfall"></div>
+      </div>
+      <div class="panel">
+        <h3 style="margin:0 0 6px;font-size:16px">Kilder</h3>
+        <div class="forfall">Matrikkelen (bygning, teig, adresse) og høydedata fra Kartverket, AR50/AR5 fra NIBIO, vegnett fra Statens vegvesen, solinnstråling fra PVGIS. Alle under åpne lisenser (CC BY 4.0 / NLOD). Flyfoto vises hos Norge i bilder, ikke her. Bakgrunnskart © Kartverket.</div>
+      </div>
+    </aside>
+  </div>
+</main>
+<footer>Generert <span id="dato"></span>. Rangeringen er en hjelp til å lete, ikke en fasit. Ingen persondata er lagret eller vist.</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(async function(){
+  const data = await fetch('data.json').then(r=>r.json());
+  const P = data.prospekter, M = data.meta;
+  const id = p => `${p.knr}-${p.gnr}-${p.bnr}-${p.fnr||0}-${p.rank}`;
+  const navnAv = p => p.navn || `${p.kommune} ${p.gnr}/${p.bnr}`;
+  const retning = a => a==null ? '–' : ['N','NØ','Ø','SØ','S','SV','V','NV'][Math.round(a/45)%8] + ` (${a}°)`;
+  const vegKat = {P:'privat', F:'fylkesvei', K:'kommunal', E:'europavei', R:'riksvei', S:'skogsbilvei'};
+
+  // --- lagring ---
+  const KEY='odehus-vurderinger';
+  let mine = {};
+  try { mine = JSON.parse(localStorage.getItem(KEY)||'{}'); } catch(e){ mine = {}; }
+  let navnMitt = ''; try { navnMitt = localStorage.getItem(KEY+'-navn')||''; } catch(e){}
+  const lagre = () => { try { localStorage.setItem(KEY, JSON.stringify(mine)); localStorage.setItem(KEY+'-navn', navnMitt); } catch(e){} };
+
+  // --- stats ---
+  document.getElementById('dato').textContent = M.generert;
+  document.getElementById('stats').innerHTML = [
+    [M.kandidater_totalt.toLocaleString('nb'), 'bolighus på tun sjekket'],
+    [M.innenfor_kriterier.toLocaleString('nb'), 'innenfor kriteriene'],
+    [M.antall, 'prospekter her'],
+    [M.visuelt_vurdert, 'sjekket mot flyfoto'],
+  ].map(([b,t])=>`<div class="stat"><b>${b}</b>${t}</div>`).join('');
+
+  // --- filtre ---
+  const fK=document.getElementById('fKommune'), fT=document.getElementById('fType'), fF=document.getElementById('fForfall'),
+        fV=document.getElementById('fVeg'), fS=document.getElementById('fSort'), fQ=document.getElementById('fSok'),
+        fSett=document.getElementById('fSett'), fU=document.getElementById('fUvurdert');
+  for (const [k,n] of M.kommuner) fK.insertAdjacentHTML('beforeend', `<option value="${k}">${n}</option>`);
+  for (const t of [...new Set(P.map(p=>p.type))].sort()) fT.insertAdjacentHTML('beforeend', `<option>${t}</option>`);
+  let bareMine=false, vis=40;
+
+  function filtrert(){
+    const q=fQ.value.trim().toLowerCase(), vmax=parseFloat(fV.value);
+    let r = P.filter(p =>
+      (!fK.value || p.knr===fK.value) && (!fT.value || p.type===fT.value) &&
+      (!fF.value || (p.forfall??-1) >= +fF.value) && (isNaN(vmax) || (p.veg_m??1e9) <= vmax) &&
+      (!fSett.checked || p.forfall_kilde==='visuell') && (!fU.checked || !mine[id(p)]) &&
+      (!bareMine || ['ja','kanskje'].includes(mine[id(p)]?.svar)) &&
+      (!q || navnAv(p).toLowerCase().includes(q) || `${p.gnr}/${p.bnr}`.includes(q) || p.kommune.toLowerCase().includes(q)));
+    const s=fS.value;
+    r.sort((a,b)=> s==='forfall' ? ((b.forfall??-1)-(a.forfall??-1) || a.rank-b.rank)
+                 : s==='sol' ? ((b.sol_pct??0)-(a.sol_pct??0)) : s==='innmark' ? ((b.innmark??0)-(a.innmark??0))
+                 : s==='veg' ? ((a.veg_m??1e9)-(b.veg_m??1e9)) : a.rank-b.rank);
+    return r;
+  }
+
+  // --- kart ---
+  const kart = L.map('kart', {scrollWheelZoom:false}).setView([60.0, 9.9], 8);
+  if (P.length) kart.fitBounds(L.latLngBounds(P.map(p=>[p.lat,p.lon])).pad(0.08));
+  L.tileLayer('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', {
+    maxZoom: 18, attribution: '© <a href="https://www.kartverket.no/">Kartverket</a>'}).addTo(kart);
+  const lag = L.layerGroup().addTo(kart);
+  const markorer = {};
+  function tegnKart(rader){
+    lag.clearLayers();
+    for (const p of rader){
+      const f = p.forfall==null ? 'fx' : 'f'+p.forfall;
+      const ic = L.divIcon({className:'', html:`<div class="marker ${f} ${p.forfall_kilde==='visuell'?'sett':''}"></div>`, iconSize:[14,14], iconAnchor:[7,7]});
+      const m = L.marker([p.lat,p.lon],{icon:ic}).addTo(lag);
+      m.bindPopup(`<div class="popup"><b>${navnAv(p)}</b><br>${p.kommune} ${p.gnr}/${p.bnr} · ${p.type}<br>Score ${p.score} · forfall ${p.forfall??'–'}<br><a href="#k-${id(p)}">Gå til kortet</a> · <a href="${p.l_bilder}" target="_blank" rel="noopener">Flyfoto</a></div>`);
+      m.on('click', ()=>{ const el=document.getElementById('k-'+id(p)); if(el){ document.querySelectorAll('.kort.aktiv').forEach(e=>e.classList.remove('aktiv')); el.classList.add('aktiv'); } });
+      markorer[id(p)] = m;
+    }
+  }
+
+  // --- kort ---
+  const liste=document.getElementById('liste'), mer=document.getElementById('mer');
+  function kort(p){
+    const k=id(p), v=mine[k]||{};
+    const f = p.forfall==null ? '' : `<span class="b f${p.forfall} ${p.forfall_kilde==='visuell'?'vis':''}">forfall ${p.forfall} · ${p.forfall_kilde==='visuell'?'sett':'laser'}</span>`;
+    return `<article class="kort" id="k-${k}" data-id="${k}">
+      <div class="topp"><h2>${navnAv(p)}</h2><span class="rank">#${p.rank} · score ${p.score}</span><span class="rank">${p.kommune} · ${p.gnr}/${p.bnr}${p.fnr?'/'+p.fnr:''}</span></div>
+      <div class="badges"><span class="b">${p.type}</span>${p.sefrak?'<span class="b">SEFRAK (eldre enn 1900)</span>':''}${f}${(p.naboer??0)===0?'<span class="b">ingen naboer 200 m</span>':''}</div>
+      ${p.forfall_tekst?`<div class="forfall">${p.forfall_tekst}</div>`:''}
+      <div class="fakta">
+        <div><span>Sol 1. mars</span>${p.sol_mars??'–'} t</div><div><span>Sol-prosentil</span>${p.sol_pct??'–'}</div>
+        <div><span>Helling mot</span>${retning(p.aspect)}</div><div><span>Høyde</span>${p.moh??'–'} moh</div>
+        <div><span>Innmark</span>${p.innmark??'–'} daa</div><div><span>Teig</span>${p.teig_daa??'–'} daa</div>
+        <div><span>Til bilvei</span>${p.veg_m??'–'} m${p.veg_kat?` (${vegKat[p.veg_kat]||p.veg_kat})`:''}</div>
+        <div><span>Naboer / hytter 200 m</span>${p.naboer??'–'} / ${p.hytter??'–'}</div>
+      </div>
+      <div class="lenker">
+        <a href="${p.l_bilder}" target="_blank" rel="noopener">Flyfoto (Norge i bilder)</a>
+        <a href="${p.l_eiendom}" target="_blank" rel="noopener">Eiendom (seeiendom)</a>
+        <a href="${p.l_kart}" target="_blank" rel="noopener">Norgeskart</a>
+        <a href="${p.l_google}" target="_blank" rel="noopener">Google Maps</a>
+        <a href="#" class="paaKart" data-id="${k}">Vis på kartet</a>
+      </div>
+      <div class="vurder">
+        <div class="valg">
+          <button data-svar="ja" class="${v.svar==='ja'?'on':''}">Ja, interessant</button>
+          <button data-svar="kanskje" class="kanskje ${v.svar==='kanskje'?'on':''}">Kanskje</button>
+          <button data-svar="nei" class="nei ${v.svar==='nei'?'on':''}">Nei</button>
+        </div>
+        <textarea placeholder="Notat (hva så du på flyfotoet, hva lurer du på?)">${v.notat||''}</textarea>
+      </div>
+    </article>`;
+  }
+  let gjeldende=[];
+  function tegn(){
+    gjeldende = filtrert();
+    tegnKart(gjeldende);
+    const synlige = gjeldende.slice(0,vis);
+    liste.innerHTML = synlige.length ? synlige.map(kort).join('') : '<div class="tom">Ingen prospekter passer filtrene.</div>';
+    mer.hidden = gjeldende.length <= vis;
+    mer.textContent = `Vis flere (${gjeldende.length - vis} til)`;
+    oppdaterMine();
+  }
+  mer.onclick = ()=>{ vis += 40; tegn(); };
+  for (const el of [fK,fT,fF,fV,fS,fQ,fSett,fU]) el.addEventListener('input', ()=>{ vis=40; tegn(); });
+
+  liste.addEventListener('click', e=>{
+    const b = e.target.closest('button[data-svar]');
+    if (b){
+      const k = b.closest('.kort').dataset.id, p = P.find(x=>id(x)===k);
+      const cur = mine[k]||{};
+      if (cur.svar===b.dataset.svar) delete cur.svar; else cur.svar=b.dataset.svar;
+      cur.navn = navnAv(p); cur.kommune=p.kommune; cur.gnrbnr=`${p.gnr}/${p.bnr}`; cur.rank=p.rank; cur.tid=new Date().toISOString();
+      if (!cur.svar && !cur.notat) delete mine[k]; else mine[k]=cur;
+      lagre();
+      b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on', x.dataset.svar===cur.svar));
+      oppdaterMine();
+    }
+    const a = e.target.closest('a.paaKart');
+    if (a){ e.preventDefault(); const m=markorer[a.dataset.id]; if(m){ kart.setView(m.getLatLng(), 14); m.openPopup(); document.getElementById('kart').scrollIntoView({behavior:'smooth', block:'start'}); } }
+  });
+  liste.addEventListener('input', e=>{
+    const t = e.target.closest('textarea'); if(!t) return;
+    const k = t.closest('.kort').dataset.id, p = P.find(x=>id(x)===k);
+    const cur = mine[k]||{}; cur.notat=t.value; cur.navn=navnAv(p); cur.kommune=p.kommune; cur.gnrbnr=`${p.gnr}/${p.bnr}`; cur.rank=p.rank; cur.tid=new Date().toISOString();
+    if (!cur.svar && !cur.notat) delete mine[k]; else mine[k]=cur;
+    lagre(); oppdaterMine();
+  });
+
+  // --- mine vurderinger ---
+  const navnFelt=document.getElementById('navn'); navnFelt.value=navnMitt;
+  navnFelt.addEventListener('input', ()=>{ navnMitt=navnFelt.value; lagre(); });
+  function oppdaterMine(){
+    const v=Object.values(mine), ja=v.filter(x=>x.svar==='ja').length, ka=v.filter(x=>x.svar==='kanskje').length, nei=v.filter(x=>x.svar==='nei').length;
+    document.getElementById('mineTall').textContent = v.length ? `${v.length} vurdert: ${ja} ja, ${ka} kanskje, ${nei} nei.` : 'Ingen ennå. Trykk Ja / Kanskje / Nei på et kort.';
+    document.getElementById('mineListe').innerHTML = v.filter(x=>x.svar==='ja'||x.svar==='kanskje').sort((a,b)=>a.rank-b.rank)
+      .map(x=>`<div>${x.svar==='ja'?'✓':'?'} ${x.navn} (${x.kommune} ${x.gnrbnr})</div>`).join('');
+  }
+  const eksport = () => ({ navn: navnMitt, eksportert: new Date().toISOString(), generert: M.generert, vurderinger: mine });
+  document.getElementById('lastNed').onclick = ()=>{
+    const blob = new Blob([JSON.stringify(eksport(), null, 1)], {type:'application/json'});
+    const a = Object.assign(document.createElement('a'), {href: URL.createObjectURL(blob), download: `odehus-vurderinger-${(navnMitt||'anonym').replace(/\W+/g,'_')}.json`});
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+  document.getElementById('kopier').onclick = async ()=>{
+    const linjer = Object.values(mine).sort((a,b)=>a.rank-b.rank).map(x=>`${(x.svar||'notat').toUpperCase().padEnd(7)} #${x.rank} ${x.navn} (${x.kommune} ${x.gnrbnr})${x.notat?' – '+x.notat:''}`);
+    const tekst = `Vurderinger${navnMitt?' fra '+navnMitt:''} (${new Date().toLocaleDateString('nb')}):\n` + (linjer.join('\n')||'(ingen)');
+    try { await navigator.clipboard.writeText(tekst); alert('Kopiert til utklippstavlen.'); } catch(e){ prompt('Kopier teksten:', tekst); }
+  };
+  document.getElementById('importer').onchange = async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    try { const d=JSON.parse(await f.text()); Object.assign(mine, d.vurderinger||{}); if(d.navn && !navnMitt){ navnMitt=d.navn; navnFelt.value=d.navn; } lagre(); tegn(); }
+    catch(err){ alert('Kunne ikke lese fila.'); }
+  };
+  document.getElementById('visMine').onclick = e=>{ bareMine=!bareMine; e.target.textContent = bareMine ? 'Vis alle' : 'Vis bare mine Ja/Kanskje'; vis=40; tegn(); };
+  document.getElementById('nullstill').onclick = ()=>{ if(confirm('Slette alle vurderingene dine i denne nettleseren?')){ mine={}; lagre(); tegn(); } };
+
+  tegn();
+  if (location.hash){ const el=document.querySelector(location.hash); if(el) el.scrollIntoView(); }
+})();
+</script>
+</body>
+</html>

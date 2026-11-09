@@ -1,0 +1,10 @@
+.venv/
+data/
+__pycache__/
+*.pyc
+.pytest_cache/
+out/*
+!out/vurder_*.json
+!out/pipeline_status.json
+!out/vakt.sh
+*.egg-info/

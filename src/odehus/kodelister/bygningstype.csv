@@ -1,0 +1,119 @@
+kode,beskrivelse
+111,Single family house: Enebolig; frittliggende bygning med kun en boligenhet
+112,"Single family house with separate lodging /basement flat: Enebolig m/hybel/sokkelleil.; enebolig som i tillegg inneholder en eller flere hybler el.l., som minimum dekkes av SSBs krav til hybel"
+113,"Farmhouse: Våningshus; enebolig på gårdsbruk, kan også omfatte enebolig med hybelleilighet, sokkelleilighet ol"
+121,"Part of semi-detached duplex: Del av tomannsbolig-vertikal; bolighus med to boliger, inkl. våningshus på gårdsbruk"
+122,"Duplex; split horizontally: Tomannsbolig; horisontaldelt; bolighus med to boliger, inkl. våningshus på gårdsbruk"
+123,"Del av våningh.tomannsb/vert.; bolighus med to boliger, inkl. våningshus på gårdsbruk"
+124,"Farmh. duplex/horizont.: Våningsh. tomannsb./horisont.; bolighus med to boliger, inkl. våningshus på gårdsbruk"
+131,"Rekkehus har vertikale gjennomgående felles boligskiller og hver boligenhet skal ligge på grunnen. Rekkehus skal ikke inneholde fellesareal for eksempel tilboder eller garasje. Et rekkehus må bestå av minimum 3 boliger, den enkeltebolig har ofte 1 - 3 etasjer og separat inngang. Hver enkelt del skal ha egetbygningspunkt i GAB."
+133,"Kjedehus: Kjedehus har vertikale boligskiller der de enkelte boligenhetene er kjedetsammen med mellombygninger, ofte garasjer eller boder. Et kjedehus må bestå avminimum 2 boliger, den enkelte bolig har ofte 1 - 3 etasjer og separat inngang. Hver enkelt del skal ha eget bygningspunkt i GAB. Kjedehus benevnes også oftesom eneboliger i kjede. Atriumhus: Betegnelsenatriumhusbenyttes om sammenbygde hus ivinkelform. Ved hjelp av de tilstøtende ytterveggene på nabohusene og/ellerlevegger får hvert enkelt hus et skjermet og innelukket uteareal/hage."
+135,Terrace house: Terrassehus; større bolighus i bratt terreng hvor bygningen følger hellingen i terrenget
+136,Other small houses with 3-4 residences: Andre småhus med 3 boliger eller flere
+141,Large detached 2-storey house: Stort frittl. boligbygg på 2 etasjer.; stort frittliggende boligbygg på 2 etasjer (5 boliger eller mer)
+142,Large detached residential building of 3 and 4 storeys: Stort frittl. boligbygg på 3 og 4 etasj.; stort frittliggende boligbygg på 3 og 4 etasjer (5 boliger eller mer)
+143,Large detached 5-storey+ house: Stort frittl. boligbygg på 5 -> etasjer; boligblokk på 5 etasjer eller mer (5 boliger eller mer)
+144,Large adjoining residential building of 2 storeys: Stort sammenbygde boligbygg på 2 etasjer (5 boliger eller mer)
+145,Large adjoining residential building of 3 and 4 storeys: Store sammenbygde boligbygg på 3 og 4 etasjer (5 boliger eller mer)
+146,Large adjoining residential building of 5 -> storeys (5 residences or more): Stort sammenh.boligbygg på 5 -> etasjer eller over (5 boliger eller mer); store sammenbygde boligbygg på 5 etasjer eller over (5 boliger eller mer)
+151,"Living and service centre: Bo- og servicesenter; bo- og servicesenter. For eldre, utviklingshemmede, funksjonshemmede mv"
+152,Student hostels/student homes: Studenthjem/studentboliger
+159,"Annen bygning for bofellesskap, eller bygning som har nær tilknytning til / tjener slik(e) bygning(er)"
+161,"Hytter, sommerhus og lignende. Fritidsbygg Her registreres også bygning med fritidsboliger hvor boligene enten er seksjonert eller på annen måte disponeres eksklusivt av fast bruker."
+162,Helårsbolig utenom våningshus som benyttes som fritidsbolig.
+163,Våningh. benyttes som fritidsb; våningshus som benyttes som fritidsbolig
+171,"mountain farm building; mountain farm building; fisherman's hut, etc.: Seterhus, sel, rorbu o.l. Rorbu, hus for fiskere til bruk under de store sesongfiskerier."
+172,"Forest hut and outlying hut; turf hut: Skogs- og utmarkskoie , gamme Skogs- og utmarkskoie, primitiv hytte brukt av jegere og tømmerhuggere. Gamme, jordhytte, særlig brukt av samer."
+181,"Garage; outbuilding, residential annex: Garasje, uthus , anneks knyttet til bolig. Garasje: F rittliggende bygning som primært benyttes for parkering av bil. Kan i tillegg inneholde boder o.l. Uthus: F rittliggende bygning som benyttes til oppbevaring av redskap, ved, materialer o.l. Anneks : Frittliggende bygg beregnet for overnatting og er ingen selvstendig boenhet for varig opphold. Det skal ikke registreres bruksareal til bolig på slike bygg."
+182,"Garage; outbuilding annex to holiday home: Garasje, uthus , anneks knyttet til fritidsbolig. Garasje: F rittliggende bygning som primært benyttes for parkering av bil. Kan i tillegg inneholde boder o.l. Uthus: F rittliggende bygning som benyttes til oppbevaring av redskap, ved, materialer o.l. Anneks : Frittliggende bygg beregnet for overnatting og er ingen selvstendig boenhet for varig opphold. Det skal ikke registreres bruksareal til bolig på slike bygg."
+183,Boat-house; boat-house; wharfside shed: Naust; båthus; sjøbu; frittliggende bygning som primært benyttes til plassering av båt(er). Kan i tillegg benyttes til oppbevaring av forskjellig redskap o.l
+193,Workmen's barracks/huts: Boligbrakker;
+199,Other residential building (Ex. secondary residence for reindeer keepers.): Annen boligbygning/sekundærbolig (f.eks. sekundærbolig reindrift)
+211,Factory building: Fabrikkbygning; bygning for industriell serieproduksjon
+212,Workshop building: Verkstedbygning; bygning for spesialproduksjon eller reparasjon
+214,"Building for treatment plant: Bygning for renseanlegg; bygning for renseanlegg, bl.a. kloakkpumpestasjon"
+216,"Building for water supply, pump station, etc.: Bygning for vannforsyning, bl.a. pumpestasjon."
+219,"Annen industribygning; annen industribygning, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)"
+231,Storage halls: Lagerhall;
+232,Cold storage and freezer: Kjøle- og fryselager;
+239,Annen lagerbygning;
+241,"Building for animals/agricultural warehouse/silo: Hus for dyr/landbr.lager/silo; hus for dyr, fôrlager, strølager, landbrukssilo, høy-/korntørke"
+243,Green house: Veksthus;
+244,Works bldg. fishing/hunting/breeding: Driftsbygning for fiske og fangst inkludert oppdrettsanlegg
+245,Boat-house /tool house for fishing: Naust/redskapshus for fiske; naust / redskapshus for fiske
+248,Other fishery and hunting building.: Annen fiskeri- og fangstbygning
+249,Other agricultural building: Annen landbruksbygning;
+311,"Office- and adm.building; Town hall: Kontor- og adm.bygning; rådhus; kontor- og administrasjonsbygning , rådhus."
+312,Bank building; Post office: Bankbygning; posthus;
+313,Radio and TV building: Radio og TV-hus;
+319,Annen kontorbygning;
+321,Shopping centre; department store: Kjøpesenter; varehus; bygning som inneholder flere forskjellige butikker
+322,Shop/business building: Butikk/forretningsbygning;
+323,Petrol station: Bensinstasjon;
+329,"Annen forretningsbygning, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)"
+330,"Exhibition and congress building: Messe- og kongressbygning; messe- og kongressbygning. Dette gjelder bygninger for messer, utstillinger, kongresser og konferanser"
+439,"Annen garasje- og hangarbygning, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)"
+411,"Airport/term.bldg, control tower: ekspedisjonsbygning, flyterminal, kontrolltårn"
+412,Railway station and subway station: Jernbane- og T-banestasjon;
+441,Car inspection building: Biltilsynsbygning;
+449,Annen veg- og trafikktilsynsbygning
+415,Freight terminal: Godsterminal;
+511,"Hotel (building??): Hotellbygning; større bygning for overnatting, godkjent etter hotelloven."
+416,Mail terminal: Postterminal;
+419,Annen ekspedisjons- og terminalbygning;
+512,"Motel (building): Motellbygning; egentlig motorhotell, oftest beliggende langs en hovedferdselsåre."
+519,"annen bygning for overnatting - godkjent etter hotelloven, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+521,"Hostel; boarding house, pension: Hospits; pensjonat; rimelig, enkelt utstyrt overnattingssted, vanligvis serveres også mat. I byene ofte leid ut på mer fast basis; over uker, måneder eller år."
+431,Parking house: Parkeringshus;
+522,"Youth hostel, holiday home; tourist cabin: Vandrerhjem, feriehjem/-koloni , turisthytte Vandrerhjem - rimelig nattelosji, ofte knyttet til medlemskap i en forening. Feriehjem/-koloni : Sted med formål å skaffe barn et sunt og styrkende ferieopphold og anledning til friluftsliv i samvær med andre barn. Turisthytte : Opprinnelig turiststasjon, fjellstue, skysstasjon, ofte kombinert med annen næring som gårdsbruk eller vertshus. Brukes også om hytter knyttet til turistforeningens løypenett, der de fleste er betjente, men også noen ubetjente hytter."
+523,"Apartment: Appartement; bygning med fritidsboliger/ boliger til utleie, boligene har bad og kokemuligheter, og leies oftest for døgn- eller ukebasis."
+524,"Camping cabin/rental cabin: Camping- /utleiehytte; enklere overnattingshytte fortrinnsvis beregnet for bilturister. Som regel er de knyttet til en campingplass. Gjestene holder vanligvis sengetøy selv Utleiehytte : Et lite hus med høy, middels eller lav standard, til midlertidig opphold. Oftest større og bedre standard enn en campinghytte, ofte ikke beliggende på en campingplass, men mer spredt i terrenget. Moderne utleiehytter har ofte høy standard og flere er ofte knyttet til et senter med vakt, kiosk/forretning og andre fasiliteter."
+529,"Annen bygning for overnatting; andre bygninger som ikke kan plasseres i de underpunktene nevnt over, men som er bygning for overnatting, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)"
+531,Restaurant building Café building: Restaurantbygning; kafébygning; Restaurantbygning eller kafébygning.
+532,"Central kitchen Canteen building: Sentralkjøkken; kantinebygning; bygning for kjøkken eller kantine tilknyttet større enhet, men der bygningen ligger for seg selv."
+533,"Snack bar Kiosk building/newsstand: Gatekjøkken; kioskbygning; gatekjøkken, kioskbygning"
+539,"Andre spisesteder som ikke passer inn i kodene over, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+611,"Play park: Lekepark; sted for opphold for barn 1-5 år. Oftest 4-5 timers tilbud, men kan også være heldag. Ingen krav til pedagogisk innhold, og selve huset i lekeparken er ofte lite og dårlig utstyrt, nærmest som spiserom å betrakte. En lekepark er i stor grad basert på at barna skal være ute og leke."
+612,"Kindergarten: Barnehage; sted for opphold for barn 1 - 5 år. Kan være heldag og halvdag, og det er knyttet et visst pedagogisk innhold til oppholdet. Selve barnehagebygningen er ofte velutstyrt, med flere avdelinger, spiserom/hvilerom for de ansatte og kjøkken. Styrt av Barnehageloven"
+613,"Primary school: Barneskole; skolebygning for skoleklassene 1-7, for barn i alderen 6-12 år."
+614,"Lower secondary school: Ungdomsskole; skolebygning for skoleklassene 8-10, for barn i alderen 13-15 år."
+615,"Combined primary and lower secondary school: Kombinert barne- og ungdomsskole; skolebygning for skoleklassene 1-10, for barn i alderen 6-15 år."
+616,Upper secondary school: Videregående skole; skolebygning for skole etter grunnskolen. Allmennfaglig eller yrkesrettet.Ikke høgskole
+619,"Annen skolebygning; andre skoler som ikke passer inn under ovennevnte kategorier, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+621,"Univ./college w/auditor.reading room: Univ./høgskole m/auditor.leses; universitets- og høgskolebygning med integrerte funksjoner, auditorium, lesesal mv."
+623,"Bygninger for laboratorievirksomhet (f.eks. i industri, sykehus og ved universiteter)."
+629,"Andre universitets- og høgskolebygninger som ikke passer inn under ovennevnte kategorier , eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+641,"Museum; art gallery: Museum; kunstgalleri; bygning for utstilling av spesielle gjenstander, og omtale av disse (museum) eller bygning for utstilling og salg av kunst (kunstgalleri)"
+642,"Library; mediatheque: Bibliotek; mediatek; bygning for utlån av bøker, lydbøker, filmer, aviser o.l. Moderne bibliotek/mediatek har ofte tilgjengelig PC gjerne med Internett-tilknytning."
+643,"Zoo/botanical gardens (building): Zoologisk/botanisk hage (byg.); bygninger i tilknytning til zoologisk og botanisk hage, gjelder også utstillingsbygninger i dyrepark."
+649,"Annen museum/biblioteksbygning; bygninger som ikke passer inn under ovennevnte kategorier , eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+651,"Sports hall: Idrettshall; bygning primært til bruk for idrettsformål, innehar som regel også garderobeanlegg og kiosk."
+652,"Ice skating hall: Ishall; bygning primært brukt som skøytehall for lengdeløp og ishockey, innehar som regel også garderobeanlegg og kiosk."
+653,"Indoor swimming pool: Svømmehall; bygning for innendørs badeanlegg som brukes til undervisning, mosjon, trening og konkurranser."
+654,Stands and sports dressing room: Tribune og idrettsgarderobe; innebygd tribuneanlegg til utendørs idrettsanlegg (tribune) eller bygning for garderobe i tilknytning til idrettsanlegg (idrettsgarderobe)
+655,"Fitness centre: Helsestudio; kompakt treningsanlegg, drevet på forretningsmessig basis - ikke offentlig."
+659,"andre idrettsbygninger som ikke passer inn under ovennevnte kategorier , eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+661,"Cinema/theatre/opera/concert building: Kino/teater/opera/konsertbygn; bygning for framføring av kino, teater, opera og konserter."
+662,"Community centre; Community house: Samfunnshus; grendehus; sentralt aktivitetshus for bygda/grenda, multifunksjonsbygg som benyttes til alt fra idrettsarrangementer til fest og andre sosiale sammenkomster."
+663,"Discotheque: Diskotek; bygning for ungdomsaktiviteter, særlig knyttet til musikk og dans - drevet på forretningsmessig basis."
+669,"Annet kulturhus; andre multifunksjonshus for kultur og idrett, herunder ungdomsklubb, som ikke passer inn under ovennevnte kategorier , eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+671,Church; chapel: Kirke; kapell; kristent gudshus
+672,Chapel/bethel; parish hall: Bedehus; menighetshus; kristent forsamlingshus
+673,Cremat.; burial chapel; bier house: Kremat.; gravkapell; bårehus; bygning for likbrenning (krematorium) eller bygning for oppbevaring av døde mennesker inntil begravelse og kremasjon (gravkapell og bårehus).
+674,Synagogue; mosque: Synagoge; moske; jødisk gudshus (synagoge) eller muslimsk gudshus (moské)
+675,"Monastery/Convent: Kloster; bygning der menn eller kvinner har trukket seg tilbake for å virkeliggjøre det religiøse ideal, i et lukket samfunn, og etter en bestemt regel."
+679,"bygninger som ikke passer inn under ovennevnte kategorier, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+719,"Annet sykehus; private sykehus eller bygning som har nær tilknytning til/tjener slik(e) bygning(er). Merknad: Dette gjelder bygninger for lokalsykehus, sentralsykehus, regionsykehus og universitetssykehus. Typen omfatter også spesialsykehus, f.eks. psykiatriske sykehus, rehabiliteringssykehus, reumatiske sykehus, kreftsykehus o.a."
+721,Nursing home: Sykehjem;
+722,Residence and treatment centre; retirement home: Bo- og behandlingssenter; institusjoner der man bor permanent og samtidig har tilgang til et behandlingstilbud.
+723,"Rehab. institution, spa: Rehabiliter.institusjon.kurbad; institusjon der man bor for en kortere eller lengre periode, samtidig som man får behandling"
+729,"Annet sykehjem; annet sykehjem, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)."
+731,"Clinic; medical office/medical centre: Klinikk; legekontor/legesenter; klinikk, legekontor/-senter/-vakt."
+732,"Health centre/social service centre, maternal and child health centre: Helse-/sosialsent. helsestasj.; senter som inneholder tilbud som f.eks. fysioterapi, kiroprakti, akupunktur, alternative behandlingsformer etc."
+739,"annen primærhelsebygning, eller bygning som har nær tilknytning til/tjener slik(e) bygning(er)"
+821,Police station: Politistasjon;
+822,Fire station; ambulance station: Brannstasjon; ambulansestasjon;
+823,Lighthouse station; pilot station: Fyrstasjon; losstasjon;
+830,Monument: Monument; konstruksjoner som er minnesmerker eller kunstverker. Må tilfredsstille krav til bygning
+840,Public toilet: Offentlig toalett;
+999,"Bygningen er registrert i matrikkelen, men bygningstypen er ukjent."

@@ -1,0 +1,48 @@
+# Ødehus-finner – alle kriterier er justerbare her.
+fylke:
+  nummer: "33"
+  navn: Buskerud
+  # Kommuneliste hentes live fra Kartverket (api.kartverket.no/kommuneinfo), ikke hardkodet.
+test_kommune: "3336"   # Rollag
+
+paths:
+  raw: data/raw
+  derived: data/derived
+  out: out
+  db: data/derived/odehus.duckdb
+
+crs: "EPSG:25833"
+
+kriterier:
+  # Matrikkel-koder, verifisert mot Kartverkets kodeliste (se LICENSES.md / notater)
+  bygningstyper: [111, 113, 171, 163] # enebolig, våningshus, seterhus, våningshus brukt som fritidsbolig
+  # Byggeår finnes IKKE i det åpne datasettet «Matrikkelen – Bygningspunkt».
+  # Vi bruker har_sefrak (SEFRAK-registrert = normalt eldre enn 1900) som alders-proxy,
+  # og beholder alle bygg med ukjent alder (dvs. alle).
+  byggeaar_maks: 1960
+  # Statuser som ekskluderes: revet/brent, bygging avlyst, flyttet (disse er uansett ikke med
+  # i produktet), samt bygg som bare er på tillatelsesstadiet (rammetillatelse / igangsetting).
+  # GR (godkjent for riving) beholdes med flagg_godkjent_revet – et hus som er godkjent revet
+  # men står, er et sterkt forfallssignal.
+  ekskluder_status: [BR, BA, BF, BU, RA, IG]
+  moh_maks: 700
+  # Tettbygd: flere enn så mange bolighus (type 111–159) innen 200 m regnes som boligfelt/tettsted, ikke tun.
+  # Et enslig småbruk har typisk 0–3 naboer; en grend 3–6. Rader over grensen får tettbygd=true og
+  # havner under «utenfor kriterier» i rangeringen, men beholdes i CSV/kart.
+  naboer_maks_200m: 6
+  aspect_foretrukket: [135, 225]
+  aspect_akseptabelt: [90, 270]
+  slope_min: 1
+  slope_max: 20
+  innmark_min_daa: 5
+  ar5_innmark_typer: [21, 22, 23]
+  veg_maks_m: 500
+  veg_flagg_m: 150
+  ortofoto_eldste_min_aar: 2008
+
+score:
+  w_sol: 0.35
+  w_innmark: 0.25
+  w_forfall: 0.30
+  w_aspect: 0.10
+  innmark_tak_daa: 30

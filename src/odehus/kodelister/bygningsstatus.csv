@@ -1,0 +1,13 @@
+kode,label,beskrivelse
+BF,Bygning flyttet,Bygningen er flyttet
+BR,Revet eller brent,Bygningen er revet eller brent
+FA,Ferdigattest,Ferdigattest
+FS,Frittatt for søknadsplikt,bygninger under 50m2 som er fritatt for søknadsplikt
+GR,Godkjent revet eller brent,Bygningen er godkjent for riving/brenning
+IG,Igangsettingstillatelse,Igangsettingstillatelse
+IP,Ikke pliktig registrert,bygninger som ikke er pliktig registrert i henhold til Plan- og bygningsloven
+MB,Midlertidig brukstillatelse,Midlertidig brukstillatelse
+MF,Meldingsak tiltak fullført,Kode for at det er fullført tiltak for meldingssak
+MT,Meldingssak registrer tiltak,Kode for at det er registrert tiltak for meldingssak
+RA,Rammetillatelse,Rammetillatelse
+TB,Tatt i bruk,Bygning er tatt i bruk

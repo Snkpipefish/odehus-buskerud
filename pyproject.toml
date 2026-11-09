@@ -1,0 +1,23 @@
+[project]
+name = "odehus"
+version = "0.1.0"
+description = "Ødehus-finner – Buskerud: finn sannsynlig fraflyttede småbruk fra åpne kartdata"
+requires-python = ">=3.12"
+dependencies = [
+  "geopandas", "shapely", "pyproj", "rasterio", "numpy", "duckdb",
+  "requests", "pvlib", "folium", "pyyaml", "tqdm", "pyogrio", "lxml", "pillow",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
