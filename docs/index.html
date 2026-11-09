@@ -346,7 +346,7 @@ select.sel,input.sel{font-family:var(--mono);font-size:10.5px;background:#0b0f14
     T.innerHTML=`<span class="close">✕</span>
       <h2>#${p.rank} · ${navnAv(p).toUpperCase()}</h2>
       <div class="sub">${p.kommune} · gnr/bnr ${p.gnr}/${p.bnr}${p.fnr?'/'+p.fnr:''} · ${p.type} · ${p.lat.toFixed(5)} N ${p.lon.toFixed(5)} Ø</div>
-      <img src="${p.img||''}" alt="Satellittutsnitt ${navnAv(p)}" loading="lazy" onerror="this.style.display='none'">
+      <img src="${p.img||''}" alt="Satellittutsnitt ${navnAv(p)}" onerror="this.style.display='none'">
       <div class="sub" style="margin-top:4px">Satellittbilde ca. 300 × 300 m, Esri World Imagery. Nyere flyfoto: <a href="${p.l_bilder}" target="_blank" rel="noopener" style="color:var(--acc)">Norge i bilder ↗</a></div>
       <div style="margin:6px 0"><span class="badge ${fk(p)}">FORFALL ${p.forfall??'?'}</span><span class="badge ${p.forfall_kilde==='visuell'?'sett':'laser'}">${p.forfall_kilde==='visuell'?'SETT':'LASER'}</span>${(p.naboer??0)===0?'<span class="badge laser">INGEN NABOER</span>':''}</div>
       ${p.forfall_tekst?`<div class="why">${p.forfall_tekst}</div>`:''}
