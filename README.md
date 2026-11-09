@@ -6,10 +6,16 @@ restaurering eller nybygg.
 
 **Prospektene kan ses og vurderes her:** https://snkpipefish.github.io/odehus-buskerud/
 
-Siden viser de beste kandidatene innenfor kriteriene med kart, nøkkeltall og lenker til flyfoto
-(Norge i bilder), Kartverkets eiendomsside, Norgeskart og Google Maps. Den som ser på kan trykke
-Ja / Kanskje / Nei og skrive notat per tun; vurderingene lagres i nettleseren og kan lastes ned som
-fil eller kopieres som tekst og sendes tilbake.
+Siden er en satellittvisning i samme stil som [GULLØYE](https://github.com/Snkpipefish/gulloye)
+(CesiumJS-globus med HUD, inspirert av gods-eye-view): hvert prospekt har et satellittutsnitt
+(Esri World Imagery, ca. 300 × 300 m) med sikte og målestokk, et galleri med alle bildene og filtre,
+og et MÅL-panel med nøkkeltall, forfallsvurdering og lenker til nyere flyfoto (Norge i bilder),
+Kartverkets eiendomsside, Norgeskart og Google Maps. Den som ser på trykker Ja / Kanskje / Nei og
+skriver notat per tun; vurderingene lagres i nettleseren og kan lastes ned som fil eller kopieres
+som tekst og sendes tilbake.
+
+Bildene lages med `python -m odehus.satbilder` (3 × 3 fliser sys sammen og beskjæres rundt
+bygningspunktet, som i GULLØYE sin satellittsjekk) og ligger i `docs/img/`.
 
 ## Hvordan det er laget
 
@@ -22,13 +28,14 @@ Pipelinen (`src/odehus/`) kjører per kommune, se `PLAN-odehus-buskerud.md`:
 5. Tilkomst: avstand til bilvei (NVDB), naboer og hytter innen 200 m
 6. Forfall: laserproxy (nDSM) for alle, manuell flyfoto-vurdering for topp-lister
 7. Score, eksport (CSV, GeoJSON, kart) og rapport
-8. Utrulling til alle 18 kommuner og samlet fylkesliste; `python -m odehus.web` lager `docs/data.json`
+8. Utrulling til alle 18 kommuner og samlet fylkesliste; `python -m odehus.web` lager `docs/data.json`, `python -m odehus.satbilder` lager `docs/img/`
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -e .
 .venv/bin/python -m odehus.pipeline alle
 .venv/bin/python -m odehus.fylke
 .venv/bin/python -m odehus.web
+.venv/bin/python -m odehus.satbilder
 ```
 
 Kjøring krever ingen nøkler eller innlogging. Nedlastede data (`data/`) og resultatfiler (`out/`)

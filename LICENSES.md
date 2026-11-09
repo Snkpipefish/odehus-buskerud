@@ -24,3 +24,14 @@ Merk: Geonorges nedlastbare «DTM 10 Terrengmodell (UTM33)» er nå merket histo
 
 Ikke brukt (krever Norge digitalt / BAAT): FKB-AR5 nedlasting, Dyrkbar jord, alle Norge i bilder-tjenester (WMS/WMTS/prosjekter). Elveg 2.0 finnes ikke lenger; NVDB Vegnett på Geonorge er kun SOSI.
 | Ortofoto, visuell vurdering (topp 300 Rollag) | norgeibilder.no (publikumsvisning, nyeste ortofoto) sett i nettleser av Claude; ingen bilder lagret i repoet | Visning tillatt for alle; ingen nedlasting | 2026-11-08 | out/vurder_3336.json |
+
+## Nettside (docs/) – bilder og karttjenester
+
+| Datasett | Kilde | Lisens / vilkår | Dato | Fil |
+|---|---|---|---|---|
+| Satellittutsnitt per prospekt (512 px, zoom 18, ca. 300 × 300 m) | Esri World Imagery, `server.arcgisonline.com/.../World_Imagery/MapServer/tile` (nøkkelfritt) | Esri Master Agreement / ArcGIS Online basemap-vilkår; attribusjon «Esri, Maxar, Earthstar Geographics, GIS User Community» er brent inn i hvert bilde og vist på siden. Ikke-kommersiell visning. Samme metode som i GULLØYE. | 2026-11-10 | docs/img/*.jpg, data/raw/esri/ (flis-cache, ikke i git) |
+| Bakgrunnskart topo / topo grå (WMTS) | Kartverket `cache.kartverket.no/v1/wmts` | CC BY 4.0 | 2026-11-10 | live i nettleser |
+| Eiendomsgrenser (WMS) | Kartverket `wms.geonorge.no/skwms1/wms.matrikkelkart`, lag `eiendomsgrense` | CC BY 4.0 / NLOD | 2026-11-10 | live i nettleser |
+| Sentinel-2 cloudless 2023 (WMTS) | EOX `tiles.maps.eox.at`, Copernicus Sentinel-2 | CC BY 4.0 (EOX) / Copernicus | 2026-11-10 | live i nettleser |
+| Terrengmesh for globus | Re:Earth `terrain.reearth.land/cesium-mesh/ellipsoid` (nøkkelfritt, som i gods-eye-view) | Fri bruk | 2026-11-10 | live i nettleser |
+| CesiumJS 1.119 | cdn.jsdelivr.net | Apache 2.0 | 2026-11-10 | lastes i nettleser |
