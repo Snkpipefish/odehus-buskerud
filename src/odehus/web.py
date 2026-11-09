@@ -28,6 +28,45 @@ def _v(x, f=None):
     return f(x) if f else x
 
 
+def _kortnavn() -> dict[int, str]:
+    """Kort norsk navn per bygningstype fra kodelista («English: Norsk; forklaring»)."""
+    from .buildings import kodeliste_bygningstype
+
+    ut = {}
+    for kode, tekst in kodeliste_bygningstype().items():
+        t = tekst.split(": ", 1)[1] if ": " in tekst.split(";")[0] else tekst
+        ut[kode] = t.split(";")[0].split(".")[0].strip()[:28]
+    ut.update({111: "Enebolig", 112: "Enebolig m/hybel", 113: "Våningshus", 121: "Tomannsbolig", 122: "Tomannsbolig",
+               123: "Våningshus (to boliger)", 124: "Våningshus (to boliger)", 131: "Rekkehus", 161: "Hytte/fritidsbolig",
+               162: "Helårsbolig som fritidsbolig", 163: "Våningshus som fritidsbolig", 171: "Seterhus/sel",
+               172: "Skogs-/utmarkskoie", 181: "Garasje/uthus/anneks", 182: "Garasje/uthus (fritid)", 183: "Naust/båthus",
+               193: "Boligbrakke", 241: "Driftsbygning (dyr/lager/silo)", 243: "Veksthus", 249: "Annen landbruksbygning",
+               231: "Lagerhall", 239: "Annen lagerbygning", 290: "Annen industri/lager"})
+    return ut
+
+
+def _legg_til_bygg(cfg: dict, rader: list[dict], radius_m: float = 160.0) -> None:
+    """Legger inn alle matrikkelens bygningspunkter innen radius_m rundt hvert prospekt:
+    [dx_m øst, dy_m nord, typekode, kortnavn, er_prospektet]. Viser hvor bygningene *skal* stå."""
+    from .ingest import connect
+
+    navn = _kortnavn()
+    con = connect(C.db_path(cfg))
+    pos = {r[0]: r[1:] for r in con.execute("SELECT rank, bygningid, x, y FROM kandidat WHERE rank <= ?",
+                                             [max(p["rank"] for p in rader)]).fetchall()}
+    for p in rader:
+        bid, x0, y0 = pos.get(p["rank"], (None, None, None))
+        if bid is None:
+            p["bygg"] = []
+            continue
+        rows = con.execute(
+            "SELECT bygningid, type, x, y, status FROM bygg WHERE kommunenr=? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ?",
+            [p["knr"], x0 - radius_m, x0 + radius_m, y0 - radius_m, y0 + radius_m]).fetchall()
+        p["bygg"] = [[round(x - x0, 1), round(y - y0, 1), int(t), navn.get(int(t), str(t)), b == bid]
+                     for b, t, x, y, st in rows if ((x - x0) ** 2 + (y - y0) ** 2) ** 0.5 <= radius_m]
+    con.close()
+
+
 def main(n_topp: int = 400) -> dict:
     cfg = C.load()
     out = C.ROOT / cfg["paths"]["out"]
@@ -56,6 +95,11 @@ def main(n_topp: int = 400) -> dict:
             lat=round(float(r.lat), 6), lon=round(float(r.lon), 6),
             l_bilder=r.lenke_norgeibilder, l_eiendom=r.lenke_seeiendom, l_kart=r.lenke_norgeskart, l_google=r.lenke_google,
         ))
+    _legg_til_bygg(cfg, rader)
+    for p in rader:  # satellittutsnitt fra odehus.satbilder, hvis laget
+        sti = f"img/{p['knr']}-{p['gnr']}-{p['bnr']}-{p['rank']}.jpg"
+        if (C.ROOT / "docs" / sti).exists():
+            p["img"] = sti
     meta = dict(generert=str(date.today()), antall=len(rader), kandidater_totalt=int(len(df)),
                 innenfor_kriterier=int(len(inn)), visuelt_vurdert=int((df.forfall_kilde == "visuell").sum()),
                 kommuner=sorted({(r["knr"], r["kommune"]) for r in rader}, key=lambda t: t[1]))

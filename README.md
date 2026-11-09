@@ -14,6 +14,8 @@ Kartverkets eiendomsside, Norgeskart og Google Maps. Den som ser på trykker Ja 
 skriver notat per tun; vurderingene lagres i nettleseren og kan lastes ned som fil eller kopieres
 som tekst og sendes tilbake.
 
+Laget MATRIKKELBYGG viser alle bygningspunkter fra Matrikkelen innen 160 m rundt valgt mål, på globusen og oppå satellittbildet, med bygningstype; det valgte bygget er merket gult. Slik ser man hvor bygningen *skal* stå, også der satellittbildet viser bare skog eller plen. Alle prospektene på siden er vurdert manuelt mot satellittbilde eller flyfoto (merket «sett»).
+
 Bildene lages med `python -m odehus.satbilder` (3 × 3 fliser sys sammen og beskjæres rundt
 bygningspunktet, som i GULLØYE sin satellittsjekk) og ligger i `docs/img/`.
 
