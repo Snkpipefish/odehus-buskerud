@@ -260,12 +260,14 @@ select.sel,input.sel{font-family:var(--mono);font-size:10.5px;background:#0b0f14
   const render=()=>scene.requestRender();
 
   // ---------- kartstabel ----------
-  const url=t=>new Cesium.UrlTemplateImageryProvider({url:t, maximumLevel:19, credit:''});
+  // maximumLevel: over dette nivået har tjenesten ikke fliser (Esri viser «Map data not yet available» på zoom 19
+  // i norske fjellbygder), så Cesium forstørrer siste nivå i stedet.
+  const url=(t,maks)=>new Cesium.UrlTemplateImageryProvider({url:t, maximumLevel:maks, credit:''});
   const BASEMAPS=[
-    {id:'sat', label:'SATELLITT', make:()=>url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')},
-    {id:'topo', label:'TOPO', make:()=>url('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png')},
-    {id:'graa', label:'TOPO GRÅ', make:()=>url('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png')},
-    {id:'eox', label:'S2 CLOUDLESS', make:()=>url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg')},
+    {id:'sat', label:'SATELLITT', make:()=>url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', 18)},
+    {id:'topo', label:'TOPO', make:()=>url('https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png', 18)},
+    {id:'graa', label:'TOPO GRÅ', make:()=>url('https://cache.kartverket.no/v1/wmts/1.0.0/topograatone/default/webmercator/{z}/{y}/{x}.png', 18)},
+    {id:'eox', label:'S2 CLOUDLESS', make:()=>url('https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg', 16)},
   ];
   let base=null, baseIdx=0;
   function setBase(i){
