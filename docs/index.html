@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ØDEHUS – Buskerud satellitt</title>
-<meta name="description" content="Satellittvisning av mulige forlatte hus, småbruk og setre i Buskerud, funnet i åpne kartdata og rangert etter sol, jord og forfall. Vurder hvert tun og send tilbake.">
+<meta name="description" content="Satellittvisning av mulige forlatte hus, småbruk, setre og tomter i Buskerud, funnet i åpne kartdata og rangert etter sol, jord og forfall. Tun i bruk er tatt ut. Vurder hvert sted og send tilbake.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23000'/><circle cx='16' cy='16' r='9' fill='none' stroke='%235dff8a' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='%235dff8a'/></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cesium@1.119.0/Build/Cesium/Widgets/widgets.css">
 <style>
@@ -200,7 +200,7 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
 <div id="help" class="help hidden">
   <div class="help-box">
     <h3>ØDEHUS – hjelp</h3>
-    <p>Mulige forlatte hus, småbruk og setre i Buskerud, funnet i åpne kartdata og rangert etter sol (35 %), dyrkbar jord (25 %), tegn til forfall (30 %) og himmelretning (10 %). Målet er et sted for blomster- og grønnsakshage, med restaurering eller nybygg.</p>
+    <p>Mulige forlatte hus, småbruk, setre og tomter i Buskerud, funnet i åpne kartdata og rangert etter sol (35 %), dyrkbar jord (25 %), tegn til forfall (30 %) og himmelretning (10 %). Målet er et sted for blomster- og grønnsakshage, med restaurering eller nybygg. Tun som er sjekket mot bilde og viser seg å være i bruk, er tatt ut av lista.</p>
     <table>
       <tr><td><b>klikk</b></td><td>på et punkt eller en rad i MÅL: kameraet flyr inn, og MÅL-panelet viser satellittbildet, tallene og vurderingsknappene</td></tr>
       <tr><td><b>▦ GALLERI</b></td><td>alle satellittbildene i rutenett, med filtre. Klikk på et bilde for å fly dit</td></tr>
@@ -265,8 +265,8 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
   scene.skyAtmosphere.brightnessShift=-0.35; scene.skyAtmosphere.saturationShift=-0.3;
   scene.fog.enabled=false;
   scene.screenSpaceCameraController.minimumZoomDistance=60;
-  try { scene.terrainProvider = await Cesium.CesiumTerrainProvider.fromUrl('https://terrain.reearth.land/cesium-mesh/ellipsoid',{requestVertexNormals:false}); scene.globe.depthTestAgainstTerrain=false; }
-  catch(e){ console.warn('terreng utilgjengelig', e); }
+  // Flatt kart (ellipsoide) med vilje: med terrengmodell forskyves punktene mot bildet når detaljnivået skifter under zoom.
+  scene.terrainProvider = new Cesium.EllipsoidTerrainProvider(); scene.globe.depthTestAgainstTerrain=false;
   const render=()=>scene.requestRender();
 
   // ---------- kartstabel ----------
@@ -310,8 +310,8 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
       const [lon,lat]=byggPos(p,b), selv=b[4];
       byggEnts.push(viewer.entities.add({
         position:Cesium.Cartesian3.fromDegrees(lon,lat,0),
-        point:{pixelSize:selv?18:11, color:selv?Cesium.Color.fromCssColorString('#ffe600').withAlpha(.25):Cesium.Color.fromCssColorString('#4fd1ff').withAlpha(.35), outlineColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#4fd1ff'), outlineWidth:2, heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
-        label:{text:(selv?'▶ ':'')+b[3], font:(selv?'bold ':'')+'13px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#dff6ff'), style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(6,3), pixelOffset:new Cesium.Cartesian2(9,8), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,2500), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+        point:{pixelSize:selv?18:11, color:selv?Cesium.Color.fromCssColorString('#ffe600').withAlpha(.25):Cesium.Color.fromCssColorString('#4fd1ff').withAlpha(.35), outlineColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#4fd1ff'), outlineWidth:2, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+        label:{text:(selv?'▶ ':'')+b[3], font:(selv?'bold ':'')+'13px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#dff6ff'), style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(6,3), pixelOffset:new Cesium.Cartesian2(9,8), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,2500), disableDepthTestDistance:Number.POSITIVE_INFINITY},
       }));
     }
     render();
@@ -331,8 +331,8 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
   for (const p of P){
     const e=viewer.entities.add({
       position:Cesium.Cartesian3.fromDegrees(p.lon,p.lat,0),
-      point:{pixelSize:12, color:Cesium.Color.fromCssColorString(FARGE[fk(p)]), outlineColor:Cesium.Color.fromCssColorString(p.forfall_kilde==='visuell'?'#5dff8a':'#000'), outlineWidth:p.forfall_kilde==='visuell'?2:1, heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
-      label:{text:`#${p.rank} ${navnAv(p)}`, font:'bold 15px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.WHITE, style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(7,4), pixelOffset:new Cesium.Cartesian2(10,-10), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,6000), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+      point:{pixelSize:12, color:Cesium.Color.fromCssColorString(FARGE[fk(p)]), outlineColor:Cesium.Color.fromCssColorString(p.forfall_kilde==='visuell'?'#5dff8a':'#000'), outlineWidth:p.forfall_kilde==='visuell'?2:1, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+      label:{text:`#${p.rank} ${navnAv(p)}`, font:'bold 15px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.WHITE, style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(7,4), pixelOffset:new Cesium.Cartesian2(10,-10), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,6000), disableDepthTestDistance:Number.POSITIVE_INFINITY},
       properties:{pid:id(p)},
     });
     ents[id(p)]=e;
@@ -349,7 +349,7 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
   const BUSKERUD={lon:9.6, lat:60.15, h:260000};
   const fly=(dest, pitch, dur)=>new Promise(res=>viewer.camera.flyTo({destination:dest, duration:dur, complete:res, cancel:res, orientation:{heading:0, pitch:Cesium.Math.toRadians(pitch), roll:0}}));
   const flyBuskerud=(d=3)=>fly(Cesium.Cartesian3.fromDegrees(BUSKERUD.lon, BUSKERUD.lat-0.9, BUSKERUD.h), -65, d);
-  const flyPunkt=(p,d=2.5)=>fly(Cesium.Cartesian3.fromDegrees(p.lon, p.lat-0.0045, 650), -52, d);
+  const flyPunkt=(p,d=2.5)=>fly(Cesium.Cartesian3.fromDegrees(p.lon, p.lat-0.0012, 520), -75, d);
   viewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(10,40,2.6e7), orientation:{heading:0,pitch:-Cesium.Math.PI_OVER_TWO,roll:0}});
 
   // ---------- MÅL-liste ----------

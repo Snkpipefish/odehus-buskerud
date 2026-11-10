@@ -1,7 +1,7 @@
 """Lager datafila til nettsiden (docs/data.json) fra fylkes-shortlisten.
 
-Tar med kandidater innenfor kriteriene som enten ligger blant de N beste eller er visuelt vurdert
-med forfall >= 1. Ingen persondata: bare matrikkelnummer, bruksnavn og åpne beregnede verdier.
+Tar med kandidater innenfor kriteriene med forfall >= 1 som enten ligger blant de N beste eller er visuelt
+vurdert. Tun som er sett og er i bruk (forfall 0) tas ut. Ingen persondata: bare matrikkelnummer, bruksnavn og åpne beregnede verdier.
 
 Kjør: python -m odehus.web [N]
 """
@@ -73,7 +73,9 @@ def main(n_topp: int = 400) -> dict:
     df = pd.read_csv(out / "buskerud_shortlist.csv")
     inn = df[~df.utenfor_kriterier.fillna(False).astype(bool)]
     vis = (inn.forfall_kilde == "visuell") & (inn.forfall_score.fillna(0) >= 1)
-    sel = inn[(inn["rank"] <= n_topp) | vis].sort_values("rank")
+    # Tun som er sett (flyfoto/satellitt) og er i bruk (forfall 0) tas ut: målet er steder å restaurere eller bygge nytt.
+    # Laser-rader uten tegn til forfall tas også ut. Igjen står: sett med forfall >= 1, og laser-rader med forfall >= 1 i topp N.
+    sel = inn[((inn["rank"] <= n_topp) | vis) & (inn.forfall_score.fillna(0) >= 1)].sort_values("rank")
     rader = []
     for r in sel.itertuples():
         knr = str(int(r.kommunenr))
