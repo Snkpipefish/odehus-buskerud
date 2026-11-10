@@ -5,12 +5,12 @@
 "tekst": "Rødt bolighus med kjøkkenhage og uthus, velholdt"
 },
 "150282107": {
-"score": 3,
-"tekst": "Ingen bygning ved punktet; gårdsplass/parkering ved stort driftsbygg i bruk, trolig revet"
+"score": 0,
+"tekst": "Bygning borte, men tomta ligger på eller inntil et gårdstun i drift – ikke aktuell (gårdsplass/parkering ved driftsbygg i bruk)"
 },
 "150328735": {
-"score": 3,
-"tekst": "Bygning borte; ryddet tomt med rester ved veien, trolig riving eller nybygg"
+"score": 0,
+"tekst": "Bygning borte, men tomta ligger på eller inntil et gårdstun i drift – ikke aktuell (ryddet tomt med rester ved veien, riving eller nybygg)"
 },
 "150334115": {
 "score": 1,
@@ -33,8 +33,8 @@
 "tekst": "Delvis gjengrodd eller lite aktivitet rundt bygningen: lite hus i trær ved vei, lite aktivitet (satellittbilde Esri)"
 },
 "150338811": {
-"score": 3,
-"tekst": "Ingen bygning ved punktet, åpen plen; bygninger 60 m vest (satellittbilde Esri)"
+"score": 0,
+"tekst": "Bygning borte, men tomta ligger på eller inntil et gårdstun i drift – ikke aktuell (åpen plen, bygninger 60 m vest)"
 },
 "150294621": {
 "score": 3,
