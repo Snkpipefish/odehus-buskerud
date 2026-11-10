@@ -258,11 +258,12 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
     requestRenderMode:true, maximumRenderTimeChange:Infinity, msaaSamples:2,
   });
   const scene=viewer.scene;
+  viewer.resolutionScale = Math.min(2, window.devicePixelRatio || 1);  // skarp tekst på høyoppløste skjermer
   scene.backgroundColor=Cesium.Color.fromCssColorString('#050608');
   scene.globe.baseColor=Cesium.Color.fromCssColorString('#0b0f14');
   scene.globe.enableLighting=false; scene.globe.showGroundAtmosphere=true;
   scene.skyAtmosphere.brightnessShift=-0.35; scene.skyAtmosphere.saturationShift=-0.3;
-  scene.fog.enabled=true; scene.fog.density=0.00025;
+  scene.fog.enabled=false;
   scene.screenSpaceCameraController.minimumZoomDistance=60;
   try { scene.terrainProvider = await Cesium.CesiumTerrainProvider.fromUrl('https://terrain.reearth.land/cesium-mesh/ellipsoid',{requestVertexNormals:false}); scene.globe.depthTestAgainstTerrain=false; }
   catch(e){ console.warn('terreng utilgjengelig', e); }
@@ -310,7 +311,7 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
       byggEnts.push(viewer.entities.add({
         position:Cesium.Cartesian3.fromDegrees(lon,lat,0),
         point:{pixelSize:selv?18:11, color:selv?Cesium.Color.fromCssColorString('#ffe600').withAlpha(.25):Cesium.Color.fromCssColorString('#4fd1ff').withAlpha(.35), outlineColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#4fd1ff'), outlineWidth:2, heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
-        label:{text:(selv?'▶ ':'')+b[3], font:(selv?'bold ':'')+'13px Inter, system-ui, sans-serif', fillColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#dff6ff'), outlineColor:Cesium.Color.BLACK, outlineWidth:4, style:Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset:new Cesium.Cartesian2(9,8), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,2500), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+        label:{text:(selv?'▶ ':'')+b[3], font:(selv?'bold ':'')+'13px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.fromCssColorString(selv?'#ffe600':'#dff6ff'), style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(6,3), pixelOffset:new Cesium.Cartesian2(9,8), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,2500), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
       }));
     }
     render();
@@ -331,7 +332,7 @@ select.sel,input.sel{font-family:var(--mono);font-size:13px;background:#0b0f14;c
     const e=viewer.entities.add({
       position:Cesium.Cartesian3.fromDegrees(p.lon,p.lat,0),
       point:{pixelSize:12, color:Cesium.Color.fromCssColorString(FARGE[fk(p)]), outlineColor:Cesium.Color.fromCssColorString(p.forfall_kilde==='visuell'?'#5dff8a':'#000'), outlineWidth:p.forfall_kilde==='visuell'?2:1, heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
-      label:{text:`#${p.rank} ${navnAv(p)}`, font:'bold 15px Inter, system-ui, sans-serif', fillColor:Cesium.Color.WHITE, outlineColor:Cesium.Color.BLACK, outlineWidth:4, style:Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset:new Cesium.Cartesian2(10,-10), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,6000), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
+      label:{text:`#${p.rank} ${navnAv(p)}`, font:'bold 15px system-ui, -apple-system, Segoe UI, Roboto, sans-serif', fillColor:Cesium.Color.WHITE, style:Cesium.LabelStyle.FILL, showBackground:true, backgroundColor:new Cesium.Color(0,0,0,0.72), backgroundPadding:new Cesium.Cartesian2(7,4), pixelOffset:new Cesium.Cartesian2(10,-10), horizontalOrigin:Cesium.HorizontalOrigin.LEFT, distanceDisplayCondition:new Cesium.DistanceDisplayCondition(0,6000), heightReference:Cesium.HeightReference.CLAMP_TO_GROUND, disableDepthTestDistance:Number.POSITIVE_INFINITY},
       properties:{pid:id(p)},
     });
     ents[id(p)]=e;
